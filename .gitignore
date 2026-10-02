@@ -1,0 +1,19 @@
+# Dependencies & build output
+node_modules/
+dist/
+*.tsbuildinfo
+.tsbuildinfo
+
+# Secrets & local Rayfin state — JANGAN di-commit
+.env
+.env.*
+rayfin/.env
+rayfin/.temp/
+rayfin/.deployments.json
+local.settings.json
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
