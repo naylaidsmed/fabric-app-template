@@ -1,10 +1,10 @@
-// ✅ GANTI src/App.spec.tsx di project-mu dengan file ini.
-// Test bawaan template mengecek halaman Welcome; setelah App.tsx diganti ke
-// Dashboard, test itu gagal — padahal `npm test` adalah salah satu syarat deploy.
-// Test ini memastikan dashboard tampil dengan data dari data.ts.
+// ✅ REPLACE src/App.spec.tsx in your project with this file.
+// The template's default test checks the Welcome page; once App.tsx is switched to
+// the Dashboard, that test fails — and `npm test` is one of the deploy checks.
+// This test makes sure the dashboard renders with data from data.ts.
 //
-// Plotly butuh browser sungguhan untuk menggambar, jadi di test chart diganti
-// kotak kosong berlabel (aria-label) yang sama.
+// Plotly needs a real browser to draw, so in tests each chart is replaced by an
+// empty box with the same label (aria-label).
 
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
@@ -24,7 +24,7 @@ describe('Dashboard', () => {
 
   it('renders every chart card once the data is loaded', async () => {
     render(<App />);
-    // Satu kartu per <ChartCard>; tiap chart punya role="img" setelah datanya siap.
+    // One card per <ChartCard>; each chart has role="img" once its data is ready.
     const card = await screen.findByRole('region', { name: 'Monthly Revenue Trend' });
     expect(await within(card).findByRole('img')).toBeInTheDocument();
     expect(await screen.findAllByRole('img')).not.toHaveLength(0);

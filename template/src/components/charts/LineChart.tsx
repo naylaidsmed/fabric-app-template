@@ -1,22 +1,22 @@
-// 📈 LineChart — satu atau beberapa garis di sepanjang waktu/kategori.
-// Diambil dari datacubeapp: "Monthly Revenue Trend" (garis + area + target
-// putus-putus) dan "Gross Margin % Trend" (garis + titik).
+// 📈 LineChart — one or more lines across time/categories.
+// Taken from datacubeapp: "Monthly Revenue Trend" (line + area + dashed
+// target) and "Gross Margin % Trend" (line + markers).
 //
-// Bentuk data (satu baris = satu titik di sumbu X):
+// Data shape (one row = one point on the X axis):
 //   [{ month: Date | 'Sep 26', revenue: 12000000000, target: 12500000000 }, ...]
-//   - kolom X  : tanggal (Date → tampil "Sep 26") atau teks
-//   - kolom Y  : angka, satu kolom per garis
-// Urutkan data dari yang paling lama ke paling baru sebelum dikirim.
+//   - X field  : a date (Date → shown as "Sep 26") or text
+//   - Y fields : numbers, one field per line
+// Sort the data from oldest to newest before passing it in.
 //
-// Contoh:
+// Example:
 //   <LineChart
 //     data={rows} x="month" unit="IDR"
 //     lines={[{ key: 'revenue', name: 'Revenue', area: true },
 //             { key: 'target', name: 'Target', dashed: true }]}
 //     label="Monthly revenue vs target, IDR billions"
 //   />
-// Tip: definisikan `lines` di luar komponen (konstanta) supaya chart tidak
-// digambar ulang setiap render.
+// Tip: define `lines` outside the component (as a constant) so the chart isn't
+// redrawn on every render.
 
 import { useMemo } from 'react';
 
@@ -35,27 +35,27 @@ import {
 } from './chart-helpers';
 
 export interface LineSeries<T> {
-  /** Kolom angka untuk garis ini. */
+  /** Numeric field for this line. */
   key: keyof T & string;
-  /** Nama di legend dan hover. */
+  /** Name in the legend and on hover. */
   name: string;
-  /** Garis putus-putus — cocok untuk target/pembanding. */
+  /** Dashed line — good for targets/comparisons. */
   dashed?: boolean;
-  /** Isi area di bawah garis — cocok untuk seri utama. */
+  /** Fill the area under the line — good for the main series. */
   area?: boolean;
-  /** Tampilkan titik di setiap nilai. */
+  /** Show a marker at every value. */
   markers?: boolean;
   color?: ThemeColor;
 }
 
 export interface LineChartProps<T> {
   data: T[];
-  /** Kolom untuk sumbu X (tanggal atau teks). */
+  /** Field for the X axis (date or text). */
   x: keyof T & string;
   lines: LineSeries<T>[];
   unit?: ValueUnit;
   height?: number;
-  /** Deskripsi chart untuk pembaca layar (aksesibilitas). */
+  /** Chart description for screen readers (accessibility). */
   label: string;
 }
 

@@ -1,6 +1,6 @@
-// ✅ TIDAK PERLU DIUBAH. Diambil apa adanya dari datacubeapp (lib/chart-theme.ts).
-// Warna chart dibaca dari CSS token di global.css saat app berjalan, jadi chart
-// otomatis ikut mode terang/gelap. Mau ganti warna? Ubah token di global.css.
+// ✅ NO CHANGES NEEDED. Taken as-is from datacubeapp (lib/chart-theme.ts).
+// Chart colors are read from the CSS tokens in global.css at runtime, so charts
+// automatically follow light/dark mode. Want different colors? Change the tokens in global.css.
 
 import { useSyncExternalStore } from 'react';
 import type { Layout } from 'plotly.js';

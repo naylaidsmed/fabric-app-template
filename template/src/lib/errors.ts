@@ -1,6 +1,6 @@
-// ✅ TIDAK PERLU DIUBAH. Diambil dari datacubeapp (lib/errors.ts).
-// Mengubah error dari connector/warehouse menjadi pesan singkat yang bisa
-// ditindaklanjuti user, ditampilkan oleh <DataState> di setiap kartu chart.
+// ✅ NO CHANGES NEEDED. Taken from datacubeapp (lib/errors.ts).
+// Turns connector/warehouse errors into a short message the user can act on,
+// shown by <DataState> in every chart card.
 
 import { MissingRayfinConfigError } from '@/lib/rayfin-client';
 

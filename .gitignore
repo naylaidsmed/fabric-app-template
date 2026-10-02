@@ -4,7 +4,7 @@ dist/
 *.tsbuildinfo
 .tsbuildinfo
 
-# Secrets & local Rayfin state — JANGAN di-commit
+# Secrets & local Rayfin state — DO NOT commit
 .env
 .env.*
 rayfin/.env

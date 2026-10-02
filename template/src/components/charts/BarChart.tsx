@@ -1,15 +1,15 @@
-// 📊 BarChart — bar horizontal (Top-N) atau vertikal, satu atau beberapa seri.
-// Diambil dari datacubeapp: "Revenue by City", "Top 10 Customers",
+// 📊 BarChart — horizontal (Top-N) or vertical bars, one or more series.
+// Taken from datacubeapp: "Revenue by City", "Top 10 Customers",
 // "Revenue by Principal" (horizontal), "Actual vs Target by Branch",
-// "Revenue vs COGS" (vertikal, 2 seri berdampingan), "Rows per Schema".
+// "Revenue vs COGS" (vertical, 2 series side by side), "Rows per Schema".
 //
-// Bentuk data (satu baris = satu kategori/bar):
+// Data shape (one row = one category/bar):
 //   [{ branch: 'JAKARTA', revenue: 50000000000, target: 60000000000 }, ...]
-//   - kolom kategori : teks (nama customer, kota, bulan, ...)
-//   - kolom nilai    : angka, satu kolom per seri
-// Urutan bar = urutan data. Untuk Top-N, urutkan dari terbesar dulu.
+//   - category field : text (customer name, city, month, ...)
+//   - value fields   : numbers, one field per series
+// Bar order = data order. For Top-N, sort largest first.
 //
-// Contoh:
+// Example:
 //   <BarChart data={customers} category="name" unit="IDR" topN={10}
 //     bars={[{ key: 'revenue', name: 'Revenue', color: 'navy' }]}
 //     label="Top 10 customers by revenue, IDR billions" />
@@ -39,16 +39,16 @@ export interface BarSeries<T> {
 
 export interface BarChartProps<T> {
   data: T[];
-  /** Kolom nama kategori. */
+  /** Category name field. */
   category: keyof T & string;
   bars: BarSeries<T>[];
-  /** 'h' = horizontal (cocok untuk nama panjang / Top-N), 'v' = vertikal. */
+  /** 'h' = horizontal (good for long names / Top-N), 'v' = vertical. */
   orientation?: 'h' | 'v';
   unit?: ValueUnit;
-  /** Hanya tampilkan N kategori pertama. */
+  /** Only show the first N categories. */
   topN?: number;
   height?: number;
-  /** Lebar area label kiri (px) untuk bar horizontal. */
+  /** Width of the left label area (px) for horizontal bars. */
   labelWidth?: number;
   label: string;
 }

@@ -1,16 +1,16 @@
-// 🔀 SankeyChart — aliran dari kolom kiri (asal) ke kolom kanan (tujuan).
-// Diambil dari datacubeapp: "Funnel Flow" (funnel → status) dan
-// "Lineage: Source → Schema" (database asal → schema warehouse).
+// 🔀 SankeyChart — flows from the left column (source) to the right column (target).
+// Taken from datacubeapp: "Funnel Flow" (funnel → status) and
+// "Lineage: Source → Schema" (source database → warehouse schema).
 //
-// Bentuk data (satu baris = satu aliran asal → tujuan):
+// Data shape (one row = one source → target flow):
 //   [{ from: 'Funnels created', to: 'Won',  amount: 4000000000 },
 //    { from: 'Funnels created', to: 'Lost', amount: 2500000000 }]
-//   - kolom asal / tujuan : teks
-//   - kolom nilai         : angka (lebar aliran)
-// Satu tingkat saja (kiri → kanan). Nama di kiri dan kanan boleh sama tanpa
-// bentrok, karena tiap sisi digambar terpisah.
+//   - source / target fields : text
+//   - value field            : number (flow width)
+// One level only (left → right). Names on the left and right may be the same
+// without clashing, because each side is drawn separately.
 //
-// Contoh:
+// Example:
 //   <SankeyChart data={flows} sourceKey="from" targetKey="to" valueKey="amount"
 //     unit="IDR" nodeColors={{ Won: 'good', Lost: 'bad' }}
 //     label="Funnel value by status, IDR billions" />
@@ -28,7 +28,7 @@ export interface SankeyChartProps<T> {
   targetKey: keyof T & string;
   valueKey: keyof T & string;
   unit?: ValueUnit;
-  /** Warna per nama node, mis. { Won: 'good', Lost: 'bad' }. */
+  /** Color per node name, e.g. { Won: 'good', Lost: 'bad' }. */
   nodeColors?: Record<string, ThemeColor>;
   height?: number;
   label: string;
@@ -46,7 +46,7 @@ export function SankeyChart<T>({
 }: SankeyChartProps<T>) {
   const theme = useChartTheme();
   const figure = useMemo<Figure>(() => {
-    // Urutan node = urutan kemunculan di data, jadi kamu mengatur urutannya.
+    // Node order = order of first appearance in the data, so you control the order.
     const unique = (key: keyof T & string) => [...new Set(data.map((row) => String(row[key] ?? '')))];
     const sources = unique(sourceKey);
     const targets = unique(targetKey);

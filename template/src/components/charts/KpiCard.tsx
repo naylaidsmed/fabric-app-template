@@ -1,17 +1,17 @@
-// 📊 KpiCard — satu kartu angka utama + perubahan dibanding tahun lalu.
-// Diambil dari datacubeapp (dashboard/executive.tsx → KpiCard, kpiDelta).
+// 📊 KpiCard — one headline-number card + change versus last year.
+// Taken from datacubeapp (dashboard/executive.tsx → KpiCard, kpiDelta).
 //
-// Bentuk data:
-//   label      teks      "Total Revenue (YTD)"
-//   value      angka     nilai sekarang (null = belum ada → tampil "—")
-//   prevValue  angka     nilai periode pembanding, opsional (null = tanpa ▲▼)
+// Data shape:
+//   label      text      "Total Revenue (YTD)"
+//   value      number    current value (null = not available yet → shows "—")
+//   prevValue  number    comparison-period value, optional (null = no ▲▼)
 //   unit       'IDR' | 'count' | 'pct'
 //
-// Contoh:
+// Example:
 //   <KpiCard label="Total Revenue (YTD)" value={200e9} prevValue={160e9} unit="IDR" />
 //
-// Perubahan: untuk IDR/count dalam % ("▲ 25.0% vs last year"); untuk persen
-// dalam poin ("▲ 5.0 pts vs last year"), karena "persen dari persen" membingungkan.
+// Change: for IDR/count it's a % ("▲ 25.0% vs last year"); for percentages
+// it's in points ("▲ 5.0 pts vs last year"), because "percent of a percent" is confusing.
 
 import { formatCount, formatIdr, formatPct } from '@/lib/format';
 import { cn } from '@/lib/utils';

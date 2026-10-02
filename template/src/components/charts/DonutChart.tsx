@@ -1,12 +1,12 @@
-// 🍩 DonutChart — porsi tiap kategori dari total, dengan angka total di tengah.
-// Diambil dari datacubeapp: "Table Migration Status".
+// 🍩 DonutChart — each category's share of the total, with the total in the middle.
+// Taken from datacubeapp: "Table Migration Status".
 //
-// Bentuk data (satu baris = satu irisan, SUDAH dijumlahkan per kategori):
+// Data shape (one row = one slice, ALREADY summed per category):
 //   [{ status: 'Loaded', tables: 59 }, { status: 'Empty', tables: 1 }]
-//   - kolom label : teks
-//   - kolom nilai : angka
+//   - label field : text
+//   - value field : number
 //
-// Contoh:
+// Example:
 //   <DonutChart data={rows} labelKey="status" valueKey="tables" unitName="tables"
 //     colors={{ Loaded: 'good', Empty: 'bad' }}
 //     label="Table migration status" />
@@ -23,9 +23,9 @@ export interface DonutChartProps<T> {
   data: T[];
   labelKey: keyof T & string;
   valueKey: keyof T & string;
-  /** Kata satuan di tengah donut dan saat hover, mis. "tables". */
+  /** Unit word in the middle of the donut and on hover, e.g. "tables". */
   unitName?: string;
-  /** Warna per label, mis. { Loaded: 'good', Empty: 'bad' }. Sisanya warna palet. */
+  /** Color per label, e.g. { Loaded: 'good', Empty: 'bad' }. The rest use palette colors. */
   colors?: Record<string, ThemeColor>;
   height?: number;
   label: string;

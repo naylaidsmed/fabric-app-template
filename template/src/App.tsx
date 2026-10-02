@@ -1,6 +1,6 @@
-// ✅ GANTI src/App.tsx di project-mu dengan file ini (sama seperti datacubeapp).
-// App hanya menampilkan Dashboard. Login, tema, dan penanganan error sudah
-// diurus oleh Root.tsx bawaan template — jangan diubah.
+// ✅ REPLACE src/App.tsx in your project with this file (same as datacubeapp).
+// The app only renders the Dashboard. Sign-in, theme, and error handling are
+// already handled by the template's default Root.tsx — don't change it.
 
 import { Dashboard } from './dashboard/Dashboard';
 

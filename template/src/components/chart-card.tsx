@@ -1,7 +1,7 @@
-// ✅ TIDAK PERLU DIUBAH. Diambil apa adanya dari datacubeapp (components/chart-card.tsx).
-// <ChartCard> = kartu putih berjudul tempat chart diletakkan.
-// <DataState> = menampilkan skeleton saat loading, pesan error + tombol "Try again",
-// atau pesan kosong — lalu chart-nya saat data siap.
+// ✅ NO CHANGES NEEDED. Taken as-is from datacubeapp (components/chart-card.tsx).
+// <ChartCard> = the white titled card a chart sits in.
+// <DataState> = shows a skeleton while loading, an error message + "Try again" button,
+// or an empty message — then the chart once the data is ready.
 
 import type { ReactNode } from 'react';
 import { AlertTriangle, RotateCcw } from 'lucide-react';

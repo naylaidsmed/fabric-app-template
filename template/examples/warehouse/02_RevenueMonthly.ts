@@ -1,25 +1,25 @@
 // =============================================================================
-// CONTOH — entity connector untuk tabel app.RevenueMonthly.
-// Pola sama persis dengan datacubeapp (rayfin/connectors/datacubewarehouse/RevenueMonthly.ts).
+// EXAMPLE — connector entity for the app.RevenueMonthly table.
+// Exactly the same pattern as datacubeapp (rayfin/connectors/datacubewarehouse/RevenueMonthly.ts).
 //
-// 👉 Taruh di: rayfin/connectors/<namaConnector>/RevenueMonthly.ts
+// 👉 Put it in: rayfin/connectors/<connectorName>/RevenueMonthly.ts
 //
-// Satu file = satu tabel. Setiap field memetakan satu kolom SQL:
-//   @decimal({ column: 'Revenue', ... }) revenue  → kolom SQL "Revenue" dibaca
-//                                                    di app sebagai `row.revenue`
-// Tipe decorator mengikuti tipe kolom: date → @date, decimal → @decimal,
-// int → @int, varchar → @text({ max: <panjang varchar> }), bit → @boolean.
-// Kolom yang boleh NULL diberi { optional: true } dan tanda `?`.
-// Cek nama & tipe kolom asli di rayfin/connectors/<namaConnector>/metadata.json
-// (dibuat otomatis oleh `rayfin connector add`) — jangan menebak.
+// One file = one table. Each field maps one SQL column:
+//   @decimal({ column: 'Revenue', ... }) revenue  → SQL column "Revenue" is read
+//                                                    in the app as `row.revenue`
+// The decorator follows the column type: date → @date, decimal → @decimal,
+// int → @int, varchar → @text({ max: <varchar length> }), bit → @boolean.
+// Nullable columns get { optional: true } and a `?`.
+// Check the real column names & types in rayfin/connectors/<connectorName>/metadata.json
+// (generated automatically by `rayfin connector add`) — don't guess.
 //
-// @role('authenticated', ['read']) = hanya user yang sudah login, hanya baca.
+// @role('authenticated', ['read']) = signed-in users only, read only.
 // =============================================================================
 
 import { entity, date, decimal, role } from '@microsoft/rayfin-core';
 import { Source } from '@microsoft/rayfin-connectors';
 
-/** app.RevenueMonthly — revenue, COGS, gross profit dan target per bulan. */
+/** app.RevenueMonthly — revenue, COGS, gross profit and target per month. */
 @role('authenticated', ['read'])
 @entity()
 export class RevenueMonthly extends Source({ schema: 'app', table: 'RevenueMonthly', primaryKey: [] }) {

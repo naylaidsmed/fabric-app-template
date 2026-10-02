@@ -1,5 +1,5 @@
-// ✅ TIDAK PERLU DIUBAH. Diambil apa adanya dari datacubeapp (hooks/use-async.ts).
-// Menjalankan fungsi pengambil data sekali, lalu memberi status loading / error / ready.
+// ✅ NO CHANGES NEEDED. Taken as-is from datacubeapp (hooks/use-async.ts).
+// Runs a data loader function once, then reports loading / error / ready status.
 
 import { useCallback, useEffect, useState } from 'react';
 
@@ -10,7 +10,7 @@ export type AsyncState<T> =
 
 export interface AsyncResource<T> {
   state: AsyncState<T>;
-  /** Runs the loader again, e.g. from a "Coba lagi" button. */
+  /** Runs the loader again, e.g. from a "Try again" button. */
   reload: () => void;
 }
 

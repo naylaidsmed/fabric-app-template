@@ -1,182 +1,182 @@
-# Kerangka Modul: Membuat Fabric App
+# Module Outline: Building a Fabric App
 
-> Ini **kerangka**, bukan isi akhir. Setiap `TODO:` diisi manual oleh penulis guide.
-> Poin bertanda ⚠️ adalah hal yang benar-benar terjadi saat membangun datacubeapp —
-> sebaiknya tetap disebut di guide.
-> Perintah di sini sudah dicek untuk Rayfin CLI **1.36.0**; cek ulang kalau versinya berubah.
+> This is an **outline**, not the final content. Each `TODO:` is filled in manually by the guide author.
+> Items marked ⚠️ are things that actually happened while building datacubeapp —
+> they should still be mentioned in the guide.
+> The commands here have been checked against Rayfin CLI **1.36.0**; re-check them if the version changes.
 
 ---
 
-## Prasyarat
+## Prerequisites
 
-- Akses Microsoft Fabric
-  - Role **Contributor** atau lebih di workspace tujuan disarankan (membuat item, data agent, tabel di warehouse)
-  - TODO: verifikasi role minimum untuk deploy app & menambah connector (di POC, CLI memperingatkan Viewer tapi `connector add` tetap berhasil)
-  - TODO: penjelasan kapasitas Fabric yang dibutuhkan (cek dokumentasi resmi terbaru)
-  - TODO: screenshot pengaturan workspace & role
-- Node.js 20 atau lebih baru — `node --version`
-  - TODO: link unduh + screenshot
+- Microsoft Fabric access
+  - **Contributor** role or higher on the target workspace is recommended (to create items, data agents, warehouse tables)
+  - TODO: verify the minimum role for deploying the app & adding a connector (in the POC, the CLI warned about Viewer but `connector add` still succeeded)
+  - TODO: explain the Fabric capacity required (check the latest official docs)
+  - TODO: screenshot of workspace & role settings
+- Node.js 20 or newer — `node --version`
+  - TODO: download link + screenshot
 - Git — `git --version`
-  - TODO: link unduh
+  - TODO: download link
 - VS Code + terminal
-  - TODO: screenshot terminal di VS Code
-- Akun GitHub (untuk bagian C)
-- TODO: penjelasan singkat "apa itu Fabric App / Rayfin" untuk pemula
+  - TODO: screenshot of the terminal in VS Code
+- GitHub account (for part C)
+- TODO: short "what is a Fabric App / Rayfin" explanation for beginners
 
 ---
 
 ## A. Create Fabric App
 
-1. Buat project dari template **blankapp** (Universal App)
+1. Create a project from the **blankapp** (Universal App) template
    - `npm create @microsoft/rayfin@latest my-app -- --template blankapp`
-   - Kenapa blankapp: template dasar yang sama dengan datacubeapp → file template langsung cocok
-   - TODO: screenshot hasil `✔ Project created`
-2. Masuk ke folder project — `cd my-app`
-3. Login ke Fabric — `npx rayfin login`
-   - TODO: screenshot jendela login
-4. Kenali struktur folder
-   - `packages/frontend/src/` = tampilan (yang akan diisi template)
-   - `rayfin/rayfin.yml` = pengaturan app di Fabric (auth, hosting, connector)
-   - TODO: diagram/screenshot struktur folder
-5. Jalankan pertama kali — `npm run dev`
-   - Membuat backend app di Fabric dan membuka app di browser
-   - TODO: penjelasan pemilihan workspace saat pertama kali
-   - ⚠️ Setelah connector warehouse ditambahkan (B2), JANGAN pakai `npm run dev` lagi — pakai `npm run dev:frontend` (lihat Troubleshooting)
-   - TODO: screenshot halaman Welcome bawaan
+   - Why blankapp: it's the same base template as datacubeapp → the template files fit directly
+   - TODO: screenshot of the `✔ Project created` output
+2. Go into the project folder — `cd my-app`
+3. Sign in to Fabric — `npx rayfin login`
+   - TODO: screenshot of the sign-in window
+4. Get to know the folder structure
+   - `packages/frontend/src/` = the UI (what the template fills in)
+   - `rayfin/rayfin.yml` = the app's settings in Fabric (auth, hosting, connectors)
+   - TODO: diagram/screenshot of the folder structure
+5. First run — `npm run dev`
+   - Creates the app backend in Fabric and opens the app in the browser
+   - TODO: explain picking a workspace on the first run
+   - ⚠️ After the warehouse connector is added (B2), DO NOT use `npm run dev` again — use `npm run dev:frontend` (see Troubleshooting)
+   - TODO: screenshot of the default Welcome page
 
 ---
 
-## B. Create Visuals (pakai template)
+## B. Create Visuals (using the template)
 
-1. Ambil repo template
-   - TODO: link repo template di GitHub
-   - TODO: cara download/clone untuk pemula
-2. Pasang library chart (Plotly)
+1. Get the template repo
+   - TODO: link to the template repo on GitHub
+   - TODO: how to download/clone, for beginners
+2. Install the chart library (Plotly)
    - `npm install plotly.js-dist-min@^4.1.1 -w @rayfin-app/frontend`
    - `npm install -D @types/plotly.js@^3.0.14 -w @rayfin-app/frontend`
-   - TODO: penjelasan apa itu `-w` (workspace)
-3. Copy file
-   - Isi `template/src/` → `packages/frontend/src/`, timpa `App.tsx`, `App.spec.tsx`, `Root.spec.tsx`, `global.css`
-   - TODO: screenshot sebelum/sesudah copy
-4. Ubah judul & menu — `src/dashboard/Dashboard.tsx`, bagian **KONFIGURASI**
-5. Lihat hasilnya dengan data contoh — label **Sample data** muncul di atas
-   - TODO: screenshot dashboard dengan data contoh
-6. Pilih chart yang dipakai
-   - Hapus `<ChartCard>` yang tidak perlu; salin satu untuk menambah
-   - Tabel daftar komponen → lihat README
-   - TODO: contoh menambah satu chart, langkah demi langkah
-7. Cari tanda `👉 GANTI DI SINI` — hanya bagian itu yang perlu diubah
-8. Butuh bantuan? Pakai prompt di `PROMPTS_FOR_CLAUDE.md`
-   - TODO: contoh percakapan dengan Claude Code
+   - TODO: explain what `-w` (workspace) means
+3. Copy the files
+   - Contents of `template/src/` → `packages/frontend/src/`, overwriting `App.tsx`, `App.spec.tsx`, `Root.spec.tsx`, `global.css`
+   - TODO: before/after screenshot of the copy
+4. Change the title & menu — `src/dashboard/Dashboard.tsx`, **CONFIGURATION** section
+5. View the result with sample data — the **Sample data** label appears at the top
+   - TODO: screenshot of the dashboard with sample data
+6. Choose which charts to use
+   - Delete the `<ChartCard>`s you don't need; copy one to add more
+   - Component list table → see the README
+   - TODO: step-by-step example of adding one chart
+7. Look for the `👉 CHANGE HERE` marker — only those parts need editing
+8. Need help? Use the prompts in `PROMPTS_FOR_CLAUDE.md`
+   - TODO: example conversation with Claude Code
 
 ---
 
-## B2. Tentukan datamu sendiri (self-service)
+## B2. Define your own data (self-service)
 
-> Kamu pegang kendali penuh: tulis query/entity sendiri, ATAU minta bantuan AI.
-> Keduanya didukung.
+> You have full control: write the queries/entities yourself, OR ask AI for help.
+> Both are supported.
 
-1. Prinsip: semua data lewat **satu file** — `src/data/data.ts`
-   - Chart hanya menggambar; data diatur di satu tempat
-   - TODO: diagram alur warehouse → tabel ringkasan → connector → data.ts → chart
-2. Cara A — data contoh (`sample-data.ts`)
-   - Kapan dipakai: mencoba tampilan, demo
-   - TODO: contoh mengganti angka contoh
-3. Cara B — warehouse Fabric (cara datacubeapp)
-   - Ikuti tabel langkah di `template/examples/warehouse/README.md`
-   - Tulis SQL sebagai **tabel ringkasan** di warehouse (bukan view)
-   - Kenapa ringkasan di SQL: mudah diaudit, cepat, tidak terpotong 100 baris
-   - Daftarkan connector: `npx rayfin connector search …` → `npx rayfin connector add …`
-   - Buat entity per tabel, daftarkan di `schema.ts`, sambungkan di `connectors.ts`
-   - Aktifkan blok CARA B di `data.ts`, lalu `USING_SAMPLE_DATA = false`
-   - TODO: walkthrough satu tabel dari SQL sampai tampil di chart
-   - TODO: screenshot hasil `connector search` dan `connector add`
-4. Bentuk data tiap chart
-   - Tertulis di bagian atas setiap file `components/charts/*.tsx`
-   - Rupiah dikirim mentah + `unit="IDR"` → tampil `Rp 793.9B`
-   - TODO: tabel ringkas bentuk data per chart
-5. Menambah tabel/entity baru
-   - Tambah tabel di SQL → file entity baru → 3 baris di `schema.ts` → fungsi `load...()` baru
-   - ⚠️ Lihat nama & tipe kolom di `metadata.json`, jangan menebak
-   - TODO: contoh menambah entity kedua
-6. Menjadwalkan refresh data
-   - `EXEC app.usp_RefreshAppMetrics;` di Data Pipeline (harian, setelah data sumber ter-load)
-   - TODO: screenshot pembuatan Data Pipeline + aktivitas Stored procedure
+1. Principle: all data goes through **one file** — `src/data/data.ts`
+   - Charts only draw; data is configured in one place
+   - TODO: flow diagram warehouse → summary table → connector → data.ts → chart
+2. Option A — sample data (`sample-data.ts`)
+   - When to use: trying out the layout, demos
+   - TODO: example of changing the sample numbers
+3. Option B — Fabric warehouse (the datacubeapp way)
+   - Follow the step table in `template/examples/warehouse/README.md`
+   - Write the SQL as a **summary table** in the warehouse (not a view)
+   - Why summarize in SQL: easy to audit, fast, not cut off at 100 rows
+   - Register the connector: `npx rayfin connector search …` → `npx rayfin connector add …`
+   - Create an entity per table, register it in `schema.ts`, wire it up in `connectors.ts`
+   - Enable the OPTION B block in `data.ts`, then `USING_SAMPLE_DATA = false`
+   - TODO: walkthrough of one table from SQL all the way to a chart
+   - TODO: screenshot of the `connector search` and `connector add` output
+4. Data shape for each chart
+   - Documented at the top of every `components/charts/*.tsx` file
+   - Rupiah passed raw + `unit="IDR"` → displayed as `Rp 793.9B`
+   - TODO: summary table of data shapes per chart
+5. Adding a new table/entity
+   - Add the table in SQL → new entity file → 3 lines in `schema.ts` → new `load...()` function
+   - ⚠️ Check column names & types in `metadata.json`, don't guess
+   - TODO: example of adding a second entity
+6. Scheduling data refresh
+   - `EXEC app.usp_RefreshAppMetrics;` in a Data Pipeline (daily, after the source data has loaded)
+   - TODO: screenshot of creating a Data Pipeline + Stored procedure activity
 
 ---
 
-## C. Publish & Commit GitHub
+## C. Publish & Commit to GitHub
 
-1. Cek sebelum publish
-   - `npm run typecheck` → `npm test` → `npm run build` (berurutan)
-   - TODO: arti tiap perintah & cara membaca error-nya
-2. Publish ke Fabric — `npx rayfin up`
-   - Tambahkan `--dry-run` untuk melihat rencana tanpa mengubah apa pun
-   - TODO: screenshot output + URL "Your app is live at"
-   - TODO: cara memberi akses app ke user lain
-3. Pindah / tambah workspace tujuan
-   - `npx rayfin up --workspace "Nama Workspace"` → deployment baru
-   - `npx rayfin up switch --list` / `npx rayfin up switch "<nama>"`
-   - ⚠️ Pindah workspace = cek ulang connector: ID warehouse berbeda walau namanya sama
-   - TODO: penjelasan kapan perlu beberapa deployment (dev/prod)
-4. Simpan ke GitHub
-   - `git init` (sekali) → `git add .` → `git commit -m "pesan"` → `git remote add origin <url>` → `git push -u origin main`
-   - ⚠️ Jangan commit `rayfin/.env`, `.env*`, `node_modules` — sudah ada di `.gitignore`
-   - TODO: screenshot membuat repo kosong di GitHub
-   - TODO: aturan menulis pesan commit yang baik
-5. Rollback (kembali ke versi sebelumnya)
-   - Batalkan satu commit: `git revert <commit>` lalu `npx rayfin up`
-   - Lihat riwayat: `git log --oneline`
-   - Coba versi lama tanpa mengubah riwayat: `git checkout <commit>` → `npx rayfin up` → `git checkout main`
-   - Catatan: `rayfin up switch` itu **pindah workspace tujuan**, bukan rollback
-   - TODO: contoh skenario rollback
+1. Check before publishing
+   - `npm run typecheck` → `npm test` → `npm run build` (in order)
+   - TODO: what each command means & how to read its errors
+2. Publish to Fabric — `npx rayfin up`
+   - Add `--dry-run` to see the plan without changing anything
+   - TODO: screenshot of the output + "Your app is live at" URL
+   - TODO: how to give other users access to the app
+3. Switch / add a target workspace
+   - `npx rayfin up --workspace "Workspace Name"` → new deployment
+   - `npx rayfin up switch --list` / `npx rayfin up switch "<name>"`
+   - ⚠️ Switching workspaces = re-check the connector: the warehouse ID differs even if the name is the same
+   - TODO: explain when you need multiple deployments (dev/prod)
+4. Save to GitHub
+   - `git init` (once) → `git add .` → `git commit -m "message"` → `git remote add origin <url>` → `git push -u origin main`
+   - ⚠️ Don't commit `rayfin/.env`, `.env*`, `node_modules` — they're already in `.gitignore`
+   - TODO: screenshot of creating an empty repo on GitHub
+   - TODO: guidelines for writing good commit messages
+5. Rollback (going back to a previous version)
+   - Undo one commit: `git revert <commit>` then `npx rayfin up`
+   - View history: `git log --oneline`
+   - Try an old version without changing history: `git checkout <commit>` → `npx rayfin up` → `git checkout main`
+   - Note: `rayfin up switch` **switches the target workspace**, it is not a rollback
+   - TODO: example rollback scenario
 
 ---
 
 ## D. Data Agent
 
-1. Buat data agent di workspace — + New item → Data agent
-   - Prasyarat: Contributor; fitur Copilot/Data agent aktif di tenant
+1. Create a data agent in the workspace — + New item → Data agent
+   - Prerequisites: Contributor; Copilot/Data agent features enabled in the tenant
    - TODO: screenshot
-2. Pilih sumber data
-   - Warehouse yang sama dengan app; centang **hanya** tabel yang perlu
-   - Utamakan tabel ringkasan (angkanya sama dengan dashboard) + tabel detail seperlunya
-   - ⚠️ Hindari kolom GUID (`uniqueidentifier`) — tidak terbaca lewat SQL endpoint; join pakai kolom kode teks
-   - TODO: screenshot pemilihan tabel
+2. Choose the data source
+   - The same warehouse as the app; tick **only** the tables you need
+   - Prefer summary tables (their numbers match the dashboard) + detail tables only as needed
+   - ⚠️ Avoid GUID columns (`uniqueidentifier`) — they can't be read through the SQL endpoint; join on text code columns
+   - TODO: screenshot of table selection
 3. Agent instructions
-   - Isi: peran, bahasa jawaban, cakupan data (filter wajib), definisi bisnis, aturan SQL
-   - ⚠️ Tulis SELURUH instructions dalam bahasa jawaban yang diinginkan — instructions campur bahasa membuat agent ikut bahasa yang dominan
-   - TODO: contoh instructions (bisa diambil dari datacubeapp `docs/DATA_AGENT_SETUP.md`)
-4. Data source instructions — penjelasan isi tiap tabel & kolom penting
-   - TODO: contoh
-5. Example queries — pasangan pertanyaan + SQL yang benar
-   - TODO: 3–5 contoh
-6. Uji di panel chat
-   - Bandingkan jawaban dengan angka dashboard; buka "Show SQL" dan cek filter-nya
-   - Uji pertanyaan di luar cakupan — agent harus menolak
-   - TODO: tabel uji
+   - Contents: role, answer language, data scope (mandatory filters), business definitions, SQL rules
+   - ⚠️ Write ALL instructions in the language you want answers in — mixed-language instructions make the agent follow the dominant language
+   - TODO: example instructions (can be taken from datacubeapp `docs/DATA_AGENT_SETUP.md`)
+4. Data source instructions — describe each table and its important columns
+   - TODO: example
+5. Example queries — pairs of question + correct SQL
+   - TODO: 3–5 examples
+6. Test in the chat panel
+   - Compare answers with the dashboard numbers; open "Show SQL" and check its filters
+   - Test out-of-scope questions — the agent should refuse
+   - TODO: test table
 7. Publish
-   - ⚠️ Setiap mengubah instructions → **Publish ulang**; app memakai versi yang dipublish, bukan draft
-   - Salin **MCP endpoint**: `https://api.fabric.microsoft.com/v1/mcp/workspaces/<ws>/dataagents/<id>/agent`
-8. (Lanjutan) Integrasi ke app
-   - Lewat **function** server-side (capability `functions`), supaya token Fabric tidak sampai ke browser
-   - Function memanggil agent atas nama **pemilik item app** (akun yang men-deploy) → user app tidak perlu akses agent satu-satu, tapi semua user bertanya dengan hak akses pemilik
-   - Batas waktu function di Fabric: 250 detik
-   - TODO: penjelasan arsitektur + rujukan ke datacubeapp (`packages/functions/src/function_app.ts`)
+   - ⚠️ Every time you change the instructions → **Publish again**; the app uses the published version, not the draft
+   - Copy the **MCP endpoint**: `https://api.fabric.microsoft.com/v1/mcp/workspaces/<ws>/dataagents/<id>/agent`
+8. (Advanced) Integrating into the app
+   - Through a server-side **function** (`functions` capability), so the Fabric token never reaches the browser
+   - The function calls the agent on behalf of the **app item owner** (the account that deployed it) → app users don't each need agent access, but every user asks with the owner's permissions
+   - Fabric function timeout: 250 seconds
+   - TODO: architecture explanation + reference to datacubeapp (`packages/functions/src/function_app.ts`)
 
 ---
 
 ## Troubleshooting
 
-| Gejala | Penyebab | Perbaikan |
+| Symptom | Cause | Fix |
 |---|---|---|
-| "No connectors are declared in project settings" | `npm run dev` menghapus connector dari backend (CLI 1.36.0) | `npx rayfin up`; untuk lokal pakai `npm run dev:frontend` |
-| Semua chart gagal, padahal sebagian tabel ada | Satu entity di `schema.ts` tidak ada di warehouse (atau berupa view) | Buat tabelnya, atau hapus entity itu dari `schema.ts` |
-| "The summary table is not available yet" | Tabel ringkasan belum dibuat / connector belum di-deploy | Jalankan SQL di warehouse, lalu `npx rayfin up` |
-| "You do not have permission…" | Akun/app tidak punya akses ke warehouse | Minta akses ke admin workspace |
-| Angka di app tidak berubah | Procedure refresh belum dijalankan / belum dijadwalkan | `EXEC app.usp_RefreshAppMetrics;` + Data Pipeline |
-| Error 15816 "not supported in distributed processing mode" | `INSERT … SELECT` membaca katalog sistem (`sys.*`) | Baca katalog ke variabel teks dulu, lalu INSERT lewat SQL dinamis |
-| Build/typecheck error "declared but its value is never read" | Data contoh/impor tidak dipakai lagi setelah pindah ke Cara B | Hapus baris impor yang ditunjuk error |
-| Test gagal mencari judul "Your app is taking shape" | `Root.spec.tsx`/`App.spec.tsx` bawaan belum diganti | Copy `App.spec.tsx` & `Root.spec.tsx` dari template |
-| Data agent menjawab bahasa yang salah | Instructions campur bahasa / belum di-publish ulang | Seragamkan bahasa instructions, lalu Publish |
+| "No connectors are declared in project settings" | `npm run dev` removes connectors from the backend (CLI 1.36.0) | `npx rayfin up`; for local work use `npm run dev:frontend` |
+| Every chart fails, even though some tables exist | One entity in `schema.ts` doesn't exist in the warehouse (or is a view) | Create the table, or remove that entity from `schema.ts` |
+| "The summary table is not available yet" | Summary table not created yet / connector not deployed yet | Run the SQL in the warehouse, then `npx rayfin up` |
+| "You do not have permission…" | The account/app has no access to the warehouse | Ask the workspace admin for access |
+| Numbers in the app don't change | Refresh procedure hasn't been run / isn't scheduled | `EXEC app.usp_RefreshAppMetrics;` + Data Pipeline |
+| Error 15816 "not supported in distributed processing mode" | `INSERT … SELECT` reads the system catalog (`sys.*`) | Read the catalog into a text variable first, then INSERT via dynamic SQL |
+| Build/typecheck error "declared but its value is never read" | Sample data/imports no longer used after moving to Option B | Delete the import line the error points to |
+| Test fails looking for the title "Your app is taking shape" | The default `Root.spec.tsx`/`App.spec.tsx` haven't been replaced | Copy `App.spec.tsx` & `Root.spec.tsx` from the template |
+| Data agent answers in the wrong language | Mixed-language instructions / not published again | Make the instructions one language, then Publish |
 | TODO: | TODO: | TODO: |

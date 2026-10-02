@@ -1,117 +1,117 @@
 # Fabric App Template
 
-Kumpulan file siap-copy untuk membuat **Fabric App** (dashboard) tanpa ngoding dari nol.
-Semua komponen diambil dari **datacubeapp** — app yang sudah berjalan di Microsoft
-Fabric — lalu dirapikan supaya bisa dipakai ulang: header, layout scroll, kartu chart,
-10 jenis visual, dan tema biru dengan mode gelap.
+Ready-to-copy files for building a **Fabric App** (dashboard) without coding from scratch.
+Every component is taken from **datacubeapp** — an app already running in Microsoft
+Fabric — and cleaned up so it can be reused: header, scrolling layout, chart cards,
+10 visual types, and a blue theme with dark mode.
 
-**Untuk siapa:** orang data yang ingin membuat dashboard Fabric App dan memegang
-kendali penuh atas datanya — menulis query sendiri, atau minta bantuan AI.
+**Who it's for:** data people who want to build a Fabric App dashboard and keep full
+control over their data — writing the queries themselves, or asking AI for help.
 
-## Isi repo
+## What's in the repo
 
 ```
 fabric-app-template/
-├─ README.md                 ← file ini
-├─ GUIDE_OUTLINE.md          ← kerangka modul belajar
-├─ PROMPTS_FOR_CLAUDE.md     ← prompt siap pakai untuk Claude Code
+├─ README.md                 ← this file
+├─ GUIDE_OUTLINE.md          ← outline for a learning module
+├─ PROMPTS_FOR_CLAUDE.md     ← ready-to-use prompts for Claude Code
 └─ template/
-   ├─ src/                   ← COPY isinya ke packages/frontend/src/ di project-mu
-   │  ├─ data/data.ts        ← 👉 satu-satunya tempat mengatur data
-   │  ├─ data/sample-data.ts ← data contoh (dummy)
-   │  ├─ dashboard/Dashboard.tsx ← halaman: judul, menu, kartu chart
-   │  ├─ components/charts/  ← 10 komponen chart (1 file = 1 chart)
-   │  ├─ components/         ← kartu chart, pembungkus Plotly, section
-   │  ├─ lib/ hooks/ types/  ← tema, format angka, status loading (tidak perlu diubah)
-   │  ├─ global.css          ← token warna & spasi (ganti global.css bawaan)
-   │  └─ App.tsx, App.spec.tsx, Root.spec.tsx ← pengganti file bawaan
-   └─ examples/warehouse/    ← contoh lengkap ambil data dari warehouse Fabric
+   ├─ src/                   ← COPY its contents into packages/frontend/src/ in your project
+   │  ├─ data/data.ts        ← 👉 the only place where data is configured
+   │  ├─ data/sample-data.ts ← sample (dummy) data
+   │  ├─ dashboard/Dashboard.tsx ← the page: title, menu, chart cards
+   │  ├─ components/charts/  ← 10 chart components (1 file = 1 chart)
+   │  ├─ components/         ← chart card, Plotly wrapper, section
+   │  ├─ lib/ hooks/ types/  ← theme, number formatting, loading state (no changes needed)
+   │  ├─ global.css          ← color & spacing tokens (replaces the default global.css)
+   │  └─ App.tsx, App.spec.tsx, Root.spec.tsx ← replacements for the default files
+   └─ examples/warehouse/    ← complete example of reading data from a Fabric warehouse
 ```
 
-Struktur `template/src/` sengaja sama dengan `packages/frontend/src/` di project
-Rayfin, jadi cukup di-copy folder ke folder.
+The structure of `template/src/` deliberately mirrors `packages/frontend/src/` in a
+Rayfin project, so you can copy it folder to folder.
 
 ## Quickstart
 
-> Butuh project Rayfin dari template **blankapp** (Universal App) — template dasar
-> yang sama dengan datacubeapp. Langkah lengkap ada di `GUIDE_OUTLINE.md`.
+> You need a Rayfin project created from the **blankapp** (Universal App) template — the
+> same base template as datacubeapp. Full steps are in `GUIDE_OUTLINE.md`.
 
 ```bash
-# 1. Buat project (pilih template blankapp)
+# 1. Create the project (choose the blankapp template)
 npm create @microsoft/rayfin@latest my-app -- --template blankapp
 cd my-app
 
-# 2. Pasang Plotly (library chart yang dipakai datacubeapp)
+# 2. Install Plotly (the chart library used by datacubeapp)
 npm install plotly.js-dist-min@^4.1.1 -w @rayfin-app/frontend
 npm install -D @types/plotly.js@^3.0.14 -w @rayfin-app/frontend
 ```
 
-3. **Copy** seluruh isi `template/src/` ke `packages/frontend/src/` di project-mu.
-   Timpa (overwrite) file yang sudah ada: `App.tsx`, `App.spec.tsx`, `Root.spec.tsx`, `global.css`.
-4. Buka `src/dashboard/Dashboard.tsx` → ganti judul & menu di bagian **KONFIGURASI**.
-5. Buka `src/data/data.ts` → ganti datanya (lihat bagian berikut).
-6. Cek sebelum deploy:
+3. **Copy** everything in `template/src/` into `packages/frontend/src/` in your project.
+   Overwrite the existing files: `App.tsx`, `App.spec.tsx`, `Root.spec.tsx`, `global.css`.
+4. Open `src/dashboard/Dashboard.tsx` → change the title & menu in the **CONFIGURATION** section.
+5. Open `src/data/data.ts` → replace the data (see the next section).
+6. Check before deploying:
 
 ```bash
 npm run typecheck && npm test && npm run build
 ```
 
-Cari tanda **`👉 GANTI DI SINI`** di setiap file — itu bagian yang perlu kamu ubah.
-File bertanda **`✅ TIDAK PERLU DIUBAH`** biarkan saja.
+Look for the **`👉 CHANGE HERE`** marker in each file — those are the parts you need to edit.
+Leave files marked **`✅ NO CHANGES NEEDED`** as they are.
 
-## Mengatur data
+## Configuring data
 
-Komponen chart tidak mengambil data sendiri — semua data datang dari
-`src/data/data.ts`. Ada dua cara, sama dengan yang dipakai datacubeapp:
+Chart components don't fetch data themselves — all data comes from
+`src/data/data.ts`. There are two options, the same ones datacubeapp uses:
 
-| Cara | Kapan dipakai | Di mana |
+| Option | When to use | Where |
 |---|---|---|
-| **A. Data contoh** | Mencoba tampilan dulu | `src/data/sample-data.ts` |
-| **B. Warehouse Fabric** | Data asli | SQL tabel ringkasan → entity connector → `data.ts` (`examples/warehouse/`) |
+| **A. Sample data** | Trying out the layout first | `src/data/sample-data.ts` |
+| **B. Fabric warehouse** | Real data | Summary-table SQL → entity connector → `data.ts` (`examples/warehouse/`) |
 
-Selama masih memakai data contoh, dashboard menampilkan label **Sample data** supaya
-tidak dikira angka asli. Setelah semua pindah ke Cara B, set `USING_SAMPLE_DATA = false`.
+While sample data is still in use, the dashboard shows a **Sample data** label so it
+isn't mistaken for real figures. Once everything has moved to Option B, set `USING_SAMPLE_DATA = false`.
 
-Setiap komponen chart menuliskan **bentuk data** yang dibutuhkan di bagian atas
-file-nya. Petakan hasil query-mu ke bentuk itu.
+Each chart component documents the **data shape** it needs at the top of its file.
+Map your query results to that shape.
 
-## Komponen chart
+## Chart components
 
-| Komponen | Untuk | Asal di datacubeapp |
+| Component | Used for | Origin in datacubeapp |
 |---|---|---|
-| `KpiCard` | angka utama + ▲▼ vs tahun lalu | baris KPI |
-| `LineChart` | tren waktu, satu/beberapa garis | Monthly Revenue Trend, Gross Margin % Trend |
-| `BarChart` | Top-N horizontal, atau vertikal berdampingan | Revenue by City, Top 10 Customers, Actual vs Target |
-| `DonutChart` | porsi dari total | Table Migration Status |
-| `GaugeChart` | % pencapaian terhadap 100% | Target Achievement |
-| `FunnelChart` | jumlah per tahap | Funnel Conversion |
-| `SankeyChart` | aliran asal → tujuan | Funnel Flow, Lineage |
-| `WaterfallChart` | awal → penambah/pengurang → total | Gross Profit Waterfall |
-| `TreemapChart` | ukuran + warna per kategori | Gross Profit by Care Area |
-| `SimpleTable` | daftar baris yang perlu dibaca | Needs Attention |
+| `KpiCard` | headline number + ▲▼ vs last year | KPI row |
+| `LineChart` | trend over time, one or more lines | Monthly Revenue Trend, Gross Margin % Trend |
+| `BarChart` | horizontal Top-N, or vertical side-by-side | Revenue by City, Top 10 Customers, Actual vs Target |
+| `DonutChart` | share of a total | Table Migration Status |
+| `GaugeChart` | % achievement against 100% | Target Achievement |
+| `FunnelChart` | count per stage | Funnel Conversion |
+| `SankeyChart` | flow from source → target | Funnel Flow, Lineage |
+| `WaterfallChart` | start → increases/decreases → total | Gross Profit Waterfall |
+| `TreemapChart` | size + color per category | Gross Profit by Care Area |
+| `SimpleTable` | list of rows to read through | Needs Attention |
 
-Angka Rupiah dikirim **mentah** (mis. `793923438241`) dengan `unit="IDR"`; chart
-otomatis menampilkannya sebagai `Rp 793.9B` (B = billion = miliar).
+Rupiah amounts are passed **raw** (e.g. `793923438241`) with `unit="IDR"`; the chart
+automatically displays them as `Rp 793.9B` (B = billion).
 
-## Menambah chart
+## Adding a chart
 
-**Chart yang sudah ada:** salin satu blok `<ChartCard>` di `Dashboard.tsx`, ganti
-judulnya, tambah fungsi `load...()` di `data.ts`, lalu sambungkan lewat `useAsync`.
+**An existing chart type:** copy one `<ChartCard>` block in `Dashboard.tsx`, change
+its title, add a `load...()` function in `data.ts`, then wire it up with `useAsync`.
 
-**Jenis chart baru:** buat file baru di `components/charts/` dengan meniru
-`DonutChart.tsx` (yang paling sederhana): terima data lewat props, susun objek
-Plotly di dalam `useMemo`, gambar dengan `<PlotlyChart>`, ambil warna dari
-`useChartTheme()`. Daftar jenis trace Plotly: <https://plotly.com/javascript/>.
-Atau pakai prompt "Tambahkan chart" di `PROMPTS_FOR_CLAUDE.md`.
+**A new chart type:** create a new file in `components/charts/` modelled on
+`DonutChart.tsx` (the simplest one): accept data through props, build the Plotly
+object inside `useMemo`, draw it with `<PlotlyChart>`, and take colors from
+`useChartTheme()`. List of Plotly trace types: <https://plotly.com/javascript/>.
+Or use the "Add a chart" prompt in `PROMPTS_FOR_CLAUDE.md`.
 
-## Pengembangan lanjutan (belum ada di datacubeapp)
+## Future work (not yet in datacubeapp)
 
-Belum dimasukkan karena belum terbukti berjalan di datacubeapp:
+Not included yet because they haven't been proven in datacubeapp:
 
-- Peta (map) per kota/provinsi
-- Filter interaktif (pilih periode/company) yang mengubah semua chart
-- Data dari **entity database app** (`client.data.<Entity>`) untuk data yang
-  ditulis user lewat app, bukan dari warehouse
-- Query dinamis lewat **function** server-side (`ctx.Tokens.Sql`)
-- Chatbot **Fabric Data Agent** di dalam app (datacubeapp sudah punya; ekstraksinya
-  ke template menyusul)
+- Map by city/province
+- Interactive filters (pick a period/company) that update every chart
+- Data from the **app's entity database** (`client.data.<Entity>`) for data that
+  users write through the app, rather than from the warehouse
+- Dynamic queries through a server-side **function** (`ctx.Tokens.Sql`)
+- A **Fabric Data Agent** chatbot inside the app (datacubeapp already has one; extracting
+  it into the template is coming later)

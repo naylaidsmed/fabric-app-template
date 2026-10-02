@@ -1,16 +1,16 @@
-// 🔻 FunnelChart — jumlah yang tersisa di setiap tahap, dari atas ke bawah.
-// Diambil dari datacubeapp: "Funnel Conversion" (created → decided → won).
+// 🔻 FunnelChart — how many remain at each stage, from top to bottom.
+// Taken from datacubeapp: "Funnel Conversion" (created → decided → won).
 //
-// Bentuk data (satu baris = satu tahap, urut dari tahap pertama):
+// Data shape (one row = one stage, starting from the first stage):
 //   [{ stage: 'Funnels created', count: 120 },
 //    { stage: 'Decided (Won + Lost)', count: 70 },
 //    { stage: 'Won', count: 45 }]
 //
-// Contoh:
+// Example:
 //   <FunnelChart data={stages} stageKey="stage" valueKey="count"
 //     unitName="funnels" label="Funnel conversion: created, decided, won" />
 //
-// Teks di tiap tahap = nilai + persen terhadap tahap pertama.
+// Text on each stage = value + percent of the first stage.
 
 import { useMemo } from 'react';
 
@@ -22,9 +22,9 @@ export interface FunnelChartProps<T> {
   data: T[];
   stageKey: keyof T & string;
   valueKey: keyof T & string;
-  /** Kata satuan saat hover, mis. "funnels". */
+  /** Unit word on hover, e.g. "funnels". */
   unitName?: string;
-  /** Lebar area nama tahap di kiri (px). */
+  /** Width of the stage-name area on the left (px). */
   labelWidth?: number;
   height?: number;
   label: string;

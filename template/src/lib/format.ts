@@ -1,5 +1,5 @@
-// ✅ TIDAK PERLU DIUBAH. Diambil apa adanya dari datacubeapp (lib/format.ts).
-// Format angka bahasa Inggris: Rp 793.9B (B = billion/miliar), 66.3%, Sep 24, 2026.
+// ✅ NO CHANGES NEEDED. Taken as-is from datacubeapp (lib/format.ts).
+// English number formatting: Rp 793.9B (B = billion), 66.3%, Sep 24, 2026.
 
 /**
  * English number formatting for the dashboard.

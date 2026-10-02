@@ -1,15 +1,15 @@
-// 🪜 WaterfallChart — dari satu angka awal, ditambah/dikurangi, sampai total.
-// Diambil dari datacubeapp: "Gross Profit Waterfall" (Revenue → COGS → Gross Profit).
+// 🪜 WaterfallChart — from a starting number, through increases/decreases, to a total.
+// Taken from datacubeapp: "Gross Profit Waterfall" (Revenue → COGS → Gross Profit).
 //
-// Bentuk data (urut dari kiri ke kanan):
+// Data shape (ordered left to right):
 //   [{ label: 'Revenue',      value: 100000000000, measure: 'absolute' },
 //    { label: 'COGS',         value: -60000000000, measure: 'relative' },
 //    { label: 'Gross Profit', value: 0,            measure: 'total' }]
-//   - measure 'absolute' : titik awal
-//   - measure 'relative' : penambah (positif) atau pengurang (NEGATIF)
-//   - measure 'total'    : dihitung otomatis oleh chart, isi value 0
+//   - measure 'absolute' : the starting point
+//   - measure 'relative' : an increase (positive) or a decrease (NEGATIVE)
+//   - measure 'total'    : computed automatically by the chart; set value to 0
 //
-// Contoh:
+// Example:
 //   <WaterfallChart steps={steps} unit="IDR"
 //     label="Waterfall of revenue, COGS and gross profit" />
 
@@ -44,8 +44,8 @@ export function WaterfallChart({ steps, unit = 'IDR', height = 320, label }: Wat
           measure: steps.map((s) => s.measure),
           x: steps.map((s) => s.label),
           y: steps.map((s) => toChartValue(s.value, unit)),
-          // Bar 'total' diisi 0 di data, jadi labelnya pakai %{final} (total hasil
-          // hitungan Plotly), bukan %{y} yang akan menampilkan 0.
+          // 'total' bars are 0 in the data, so their label uses %{final} (the total
+          // Plotly computes), not %{y}, which would show 0.
           texttemplate: steps.map((s) => hoverValue(s.measure === 'total' ? 'final' : 'y', unit)),
           textposition: 'outside',
           connector: { line: { color: theme.grid } },

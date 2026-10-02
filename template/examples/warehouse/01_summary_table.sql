@@ -1,34 +1,34 @@
 /* ============================================================================
-   CONTOH — tabel ringkasan di warehouse untuk dibaca Fabric App.
-   Pola ini sama dengan datacubeapp (warehouse/app_metrics.sql).
+   EXAMPLE — a summary table in the warehouse for the Fabric App to read.
+   Same pattern as datacubeapp (warehouse/app_metrics.sql).
 
-   Kenapa tabel ringkasan, bukan baca tabel fakta langsung?
-     - Logika bisnis (filter, periode, rumus) ada di SQL → mudah diaudit & diuji.
-     - App hanya membaca puluhan baris → cepat, dan tidak terpotong batas
-       100 baris per halaman dari connector.
-     - Connector hanya bisa membaca TABEL fisik, BUKAN view.
+   Why a summary table instead of reading the fact table directly?
+     - Business logic (filters, periods, formulas) lives in SQL → easy to audit & test.
+     - The app only reads a few dozen rows → fast, and not cut off by the
+       connector's 100-rows-per-page limit.
+     - The connector can only read physical TABLES, NOT views.
 
-   Cara pakai:
-     1. 👉 GANTI DI SINI: semua yang ditulis <...> di bawah dengan nama asli
-        di warehouse-mu.
-     2. Uji SELECT-nya dulu sendirian sampai angkanya benar.
-     3. Jalankan file ini SEKALI di SQL query editor warehouse.
-     4. Jadwalkan `EXEC app.usp_RefreshAppMetrics;` (mis. Data Pipeline harian)
-        supaya angka di app ikut diperbarui.
+   How to use:
+     1. 👉 CHANGE HERE: everything written as <...> below, using the real names
+        in your warehouse.
+     2. Test the SELECT on its own first until the numbers are right.
+     3. Run this file ONCE in the warehouse SQL query editor.
+     4. Schedule `EXEC app.usp_RefreshAppMetrics;` (e.g. a daily Data Pipeline)
+        so the numbers in the app stay up to date.
 
-   Gotcha Fabric:
-     - Kolom GUID (uniqueidentifier) tidak terbaca lewat SQL endpoint/connector.
-       JOIN dan tampilkan kolom kode teks saja.
-     - Fabric T-SQL: pakai varchar (bukan nvarchar); beri panjang pada setiap varchar.
-     - Warehouse berisi banyak company/mata uang? Selalu filter, jangan jumlah lintas company.
+   Fabric gotchas:
+     - GUID (uniqueidentifier) columns can't be read through the SQL endpoint/connector.
+       JOIN on and display text code columns only.
+     - Fabric T-SQL: use varchar (not nvarchar); give every varchar a length.
+     - Warehouse holds multiple companies/currencies? Always filter; never sum across companies.
    ============================================================================ */
 
--- 1. Schema dan tabel (aman dijalankan ulang) --------------------------------
+-- 1. Schema and table (safe to re-run) ---------------------------------------
 IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = 'app')
     EXEC('CREATE SCHEMA app');
 GO
 
--- Satu baris per bulan: revenue, COGS, target. Angka dalam mata uang aslinya.
+-- One row per month: revenue, COGS, target. Amounts in their original currency.
 IF OBJECT_ID('app.RevenueMonthly', 'U') IS NULL
     CREATE TABLE app.RevenueMonthly (
     MonthStart date NOT NULL,
@@ -39,7 +39,7 @@ IF OBJECT_ID('app.RevenueMonthly', 'U') IS NULL
     );
 GO
 
--- 2. Procedure refresh: hapus isi lalu isi ulang, dalam satu transaksi -------
+-- 2. Refresh procedure: clear and refill, inside one transaction -------------
 CREATE OR ALTER PROCEDURE app.usp_RefreshAppMetrics AS
 BEGIN
     SET NOCOUNT ON;
@@ -57,7 +57,7 @@ BEGIN
                SUM(ISNULL(r.<RevenueAmount>, 0)) AS Revenue,
                SUM(ISNULL(r.<CogsAmount>, 0)) AS Cogs
         FROM <schema>.<FactRevenueTable> r
-        WHERE r.<CompanyCode> = '<kode company>'
+        WHERE r.<CompanyCode> = '<company code>'
           AND r.<InvoiceDate> >= DATEADD(month, -23, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1))
         GROUP BY DATEFROMPARTS(YEAR(r.<InvoiceDate>), MONTH(r.<InvoiceDate>), 1)
     ) rv
@@ -65,17 +65,17 @@ BEGIN
         SELECT DATEFROMPARTS(YEAR(t.<TargetDate>), MONTH(t.<TargetDate>), 1) AS MonthStart,
                SUM(t.<TargetAmount>) AS Target
         FROM <schema>.<FactTargetTable> t
-        WHERE t.<CompanyCode> = '<kode company>'
+        WHERE t.<CompanyCode> = '<company code>'
         GROUP BY DATEFROMPARTS(YEAR(t.<TargetDate>), MONTH(t.<TargetDate>), 1)
     ) tg ON tg.MonthStart = rv.MonthStart;
 
-    -- Tambah tabel ringkasan lain di sini dengan pola DELETE + INSERT yang sama.
+    -- Add other summary tables here using the same DELETE + INSERT pattern.
 
     COMMIT TRANSACTION;
 END;
 GO
 
--- 3. Isi pertama kali, lalu cek ------------------------------------------------
+-- 3. Initial load, then check ------------------------------------------------
 EXEC app.usp_RefreshAppMetrics;
 GO
 

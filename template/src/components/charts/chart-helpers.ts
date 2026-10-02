@@ -1,20 +1,20 @@
-// ✅ TIDAK PERLU DIUBAH. Helper kecil yang dipakai bersama oleh semua chart.
-// Isinya pola yang sama dengan datacubeapp: nilai Rupiah ditampilkan dalam
-// miliar ("B") di sumbu chart, persen dengan 1 desimal, dan warna diambil dari tema.
+// ✅ NO CHANGES NEEDED. Small helpers shared by every chart.
+// Same patterns as datacubeapp: Rupiah values are shown in
+// billions ("B") on chart axes, percentages with 1 decimal, and colors come from the theme.
 
 import type { ChartTheme } from '@/lib/chart-theme';
 import { toBillions, toNumber } from '@/lib/format';
 
 /**
- * Satuan angka yang dikirim ke chart.
- * - 'IDR'   : Rupiah mentah (mis. 793923438241). Chart otomatis menampilkannya
- *             dalam miliar: "Rp 793.9B". Jangan dibagi sendiri.
- * - 'pct'   : persen yang sudah dikali 100 (mis. 66.3 untuk 66,3%).
- * - 'count' : jumlah biasa (mis. jumlah funnel, jumlah tabel).
+ * Unit of the numbers passed to a chart.
+ * - 'IDR'   : raw Rupiah (e.g. 793923438241). The chart automatically shows it
+ *             in billions: "Rp 793.9B". Don't divide it yourself.
+ * - 'pct'   : a percentage already multiplied by 100 (e.g. 66.3 for 66.3%).
+ * - 'count' : a plain count (e.g. number of funnels, number of tables).
  */
 export type ValueUnit = 'IDR' | 'pct' | 'count';
 
-/** Warna tema yang boleh dipilih untuk seri/bar/node. Nilainya dari global.css. */
+/** Theme colors you can pick for a series/bar/node. Values come from global.css. */
 export type ThemeColor = 'brand' | 'navy' | 'sky' | 'good' | 'bad' | 'warn' | 'muted';
 
 export function themeColor(theme: ChartTheme, color: ThemeColor | undefined, index: number): string {
@@ -22,13 +22,13 @@ export function themeColor(theme: ChartTheme, color: ThemeColor | undefined, ind
   return theme.series[index % theme.series.length];
 }
 
-/** Nilai yang digambar di chart (Rupiah → miliar). */
+/** The value drawn on the chart (Rupiah → billions). */
 export function toChartValue(value: unknown, unit: ValueUnit): number {
   const n = toNumber(value);
   return unit === 'IDR' ? toBillions(n) : n;
 }
 
-/** Akhiran sumbu: "B" untuk Rupiah miliar, "%" untuk persen. */
+/** Axis suffix: "B" for Rupiah billions, "%" for percentages. */
 export function axisSuffix(unit: ValueUnit): string {
   if (unit === 'IDR') return 'B';
   if (unit === 'pct') return '%';
@@ -36,8 +36,8 @@ export function axisSuffix(unit: ValueUnit): string {
 }
 
 /**
- * Potongan hovertemplate Plotly untuk satu nilai, mis. "Rp %{y:,.1f}B".
- * `field` adalah variabel Plotly-nya: 'y', 'x', 'value'.
+ * Plotly hovertemplate fragment for a single value, e.g. "Rp %{y:,.1f}B".
+ * `field` is the Plotly variable: 'y', 'x', 'value'.
  */
 export function hoverValue(field: string, unit: ValueUnit): string {
   if (unit === 'IDR') return `Rp %{${field}:,.1f}B`;
@@ -45,13 +45,13 @@ export function hoverValue(field: string, unit: ValueUnit): string {
   return `%{${field}:,}`;
 }
 
-/** Label sumbu/kategori dari isi kolom: tanggal → "Sep 26", lainnya → teks. */
+/** Axis/category label from a field value: date → "Sep 26", anything else → text. */
 export function toLabel(value: unknown, formatDate: (d: Date) => string): string {
   if (value instanceof Date) return formatDate(value);
   return value == null ? '' : String(value);
 }
 
-/** Nama panjang dipotong di sumbu; nama lengkap tetap muncul saat hover. */
+/** Long names are truncated on the axis; the full name still appears on hover. */
 export function shorten(name: string, max = 26): string {
   return name.length > max ? `${name.slice(0, max - 1)}…` : name;
 }

@@ -1,5 +1,5 @@
-// ✅ TIDAK PERLU DIUBAH. Diambil dari datacubeapp (dashboard/section-heading.tsx).
-// Satu bagian dashboard (judul + subjudul) yang bisa dituju dari menu navigasi.
+// ✅ NO CHANGES NEEDED. Taken from datacubeapp (dashboard/section-heading.tsx).
+// One dashboard section (title + subtitle) that the navigation menu can jump to.
 
 import type { ReactNode } from 'react';
 

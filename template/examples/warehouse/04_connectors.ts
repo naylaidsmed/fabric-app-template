@@ -1,19 +1,19 @@
 // =============================================================================
-// CONTOH — menyambungkan connector ke app (RayfinClient).
-// Pola sama dengan datacubeapp (packages/frontend/src/lib/connectors.ts).
+// EXAMPLE — wiring the connector into the app (RayfinClient).
+// Same pattern as datacubeapp (packages/frontend/src/lib/connectors.ts).
 //
-// 👉 Taruh di: packages/frontend/src/lib/connectors.ts (ganti isinya)
+// 👉 Put it in: packages/frontend/src/lib/connectors.ts (replace its contents)
 //
-// Setelah ini, di data.ts kamu bisa menulis:
+// After this, in data.ts you can write:
 //   const client = await getRayfinClient();
 //   client.connectors.warehouse.RevenueMonthly.findMany();
-//                     ^^^^^^^^^ = kunci di bawah. Harus SAMA dengan `name`
-//                               connector di rayfin/rayfin.yml.
+//                     ^^^^^^^^^ = the key below. Must MATCH the connector's
+//                               `name` in rayfin/rayfin.yml.
 //
-// Kenapa ditulis manual? File bawaan berisi penanda "@generated" yang membuat
-// `rayfin connector add` menulis ulang file ini setiap kali dijalankan. Dengan
-// menghapus penanda itu, file ini jadi milikmu dan tidak tertimpa — CLI hanya
-// akan mencetak potongan kode yang perlu kamu tambahkan.
+// Why write it by hand? The default file contains an "@generated" marker that makes
+// `rayfin connector add` rewrite this file every time it runs. Removing that
+// marker makes the file yours so it won't be overwritten — the CLI will only
+// print the code snippet you need to add.
 // =============================================================================
 
 import type { ConnectorConfig, ConnectorsRuntime } from '@microsoft/rayfin-connectors';
@@ -31,5 +31,5 @@ export const connectorConfigs: Record<string, ConnectorConfig> = {
   warehouse: warehouseConfig,
 };
 
-// Connector warehouse tidak butuh runtime tambahan.
+// The warehouse connector needs no extra runtime.
 export const connectorRuntimes: ConnectorsRuntime = {};

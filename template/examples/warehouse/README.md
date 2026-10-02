@@ -1,35 +1,35 @@
-# Data dari warehouse Fabric (Cara B)
+# Data from a Fabric warehouse (Option B)
 
-Langkah yang benar-benar dipakai di datacubeapp untuk membaca warehouse.
-Contoh di folder ini memakai nama connector **`warehouse`** dan satu tabel
-**`app.RevenueMonthly`**. Ganti keduanya sesuai project-mu.
+The steps actually used in datacubeapp to read from the warehouse.
+The examples in this folder use the connector name **`warehouse`** and a single table
+**`app.RevenueMonthly`**. Change both to match your project.
 
-| Langkah | Yang dilakukan | File contoh |
+| Step | What to do | Example file |
 |---|---|---|
-| 1 | Pasang capability connector (sekali saja, dari root project): `npm run pack:add -- connectors` | — |
-| 2 | Buat tabel ringkasan di warehouse, jalankan di SQL query editor | `01_summary_table.sql` |
-| 3 | Cari warehouse-mu: `npx rayfin connector search --all-workspaces --type fabric-warehouse` | — |
-| 4 | Daftarkan connector (salin `workspace-id` & `item-id` dari langkah 3): `npx rayfin connector add --type fabric-warehouse --workspace-id <ws> --item-id <item> --name warehouse --operations read` | — |
-| 5 | Buat entity per tabel di `rayfin/connectors/warehouse/` | `02_RevenueMonthly.ts` |
-| 6 | Ganti `rayfin/connectors/warehouse/schema.ts` | `03_schema.ts` |
-| 7 | Ganti `packages/frontend/src/lib/connectors.ts` | `04_connectors.ts` |
-| 8 | Di `src/data/data.ts`: hapus `return sample...;`, aktifkan blok CARA B | `data.ts` |
-| 9 | Cek lalu deploy: `npm run typecheck` → `npm test` → `npm run build` → `npx rayfin up` | — |
+| 1 | Install the connector capability (once, from the project root): `npm run pack:add -- connectors` | — |
+| 2 | Create the summary table in the warehouse; run it in the SQL query editor | `01_summary_table.sql` |
+| 3 | Find your warehouse: `npx rayfin connector search --all-workspaces --type fabric-warehouse` | — |
+| 4 | Register the connector (copy the `workspace-id` & `item-id` from step 3): `npx rayfin connector add --type fabric-warehouse --workspace-id <ws> --item-id <item> --name warehouse --operations read` | — |
+| 5 | Create an entity per table in `rayfin/connectors/warehouse/` | `02_RevenueMonthly.ts` |
+| 6 | Replace `rayfin/connectors/warehouse/schema.ts` | `03_schema.ts` |
+| 7 | Replace `packages/frontend/src/lib/connectors.ts` | `04_connectors.ts` |
+| 8 | In `src/data/data.ts`: delete `return sample...;`, enable the OPTION B block | `data.ts` |
+| 9 | Check, then deploy: `npm run typecheck` → `npm test` → `npm run build` → `npx rayfin up` | — |
 
-## Hal yang sering bikin gagal (dialami di datacubeapp)
+## Common causes of failure (hit in datacubeapp)
 
-- **Hanya tabel, bukan view.** Connector tidak bisa membaca view. Kalau logikamu
-  ada di view, salin hasilnya ke tabel lewat procedure (lihat `01_summary_table.sql`).
-- **Satu tabel hilang = semua gagal.** Setiap entity di `schema.ts` harus ada
-  di warehouse. Satu yang tidak ada membuat seluruh connector ditolak.
-- **Kolom GUID tidak terbaca.** Jangan petakan kolom `uniqueidentifier`; pakai kolom kode teks.
-- **Jangan menebak nama kolom.** Lihat `rayfin/connectors/warehouse/metadata.json`
-  (dibuat otomatis di langkah 4) untuk nama dan tipe kolom yang sebenarnya.
-- **`connector add --yes` menimpa `schema.ts`** dengan placeholder. Saat menjalankan
-  ulang, jangan pakai `--yes`, atau kembalikan `schema.ts`-mu dari git setelahnya.
-- **`npm run dev` menghapus connector** dari backend yang sudah di-deploy (Rayfin CLI 1.36.0).
-  Setelah connector ada, jalankan lokal dengan `npm run dev:frontend`. Kalau
-  terlanjur, pulihkan dengan `npx rayfin up`.
-- **Batas 100 baris.** `findMany()` mengambil satu halaman. Tabel ringkasan
-  sebaiknya kecil; kalau lebih dari 100 baris, pakai
-  `.select([...]).first(1000).execute()` seperti `fetchMigration` di datacubeapp.
+- **Tables only, not views.** The connector can't read views. If your logic lives
+  in a view, copy its result into a table through a procedure (see `01_summary_table.sql`).
+- **One missing table = everything fails.** Every entity in `schema.ts` must exist
+  in the warehouse. A single missing one causes the whole connector to be rejected.
+- **GUID columns can't be read.** Don't map `uniqueidentifier` columns; use text code columns.
+- **Don't guess column names.** Check `rayfin/connectors/warehouse/metadata.json`
+  (generated automatically in step 4) for the actual column names and types.
+- **`connector add --yes` overwrites `schema.ts`** with a placeholder. When re-running
+  it, don't use `--yes`, or restore your `schema.ts` from git afterwards.
+- **`npm run dev` removes connectors** from the already-deployed backend (Rayfin CLI 1.36.0).
+  Once connectors exist, run locally with `npm run dev:frontend`. If it already
+  happened, restore them with `npx rayfin up`.
+- **100-row limit.** `findMany()` fetches a single page. Summary tables should
+  be small; if one has more than 100 rows, use
+  `.select([...]).first(1000).execute()` like `fetchMigration` in datacubeapp.

@@ -1,10 +1,10 @@
 // =============================================================================
-// 🧪 sample-data.ts — CARA A: data contoh (dummy). Angka fiktif, hanya untuk
-// melihat tampilan. Dipakai oleh data.ts lewat `sample.<nama>`.
+// 🧪 sample-data.ts — OPTION A: sample (dummy) data. Fictional numbers, only for
+// previewing the layout. Used by data.ts through `sample.<name>`.
 //
-// 👉 GANTI DI SINI kalau mau mencoba tampilan dengan angkamu sendiri.
-// Setelah semua fungsi di data.ts memakai data asli (Cara B), file ini dan
-// baris `import * as sample` di data.ts boleh dihapus.
+// 👉 CHANGE HERE if you want to try the layout with your own numbers.
+// Once every function in data.ts uses real data (Option B), this file and the
+// `import * as sample` line in data.ts can be deleted.
 // =============================================================================
 
 import type {
@@ -19,7 +19,7 @@ import type {
   StatusRow,
 } from './data';
 
-const B = 1e9; // 1 miliar Rupiah (billion), supaya angka contoh mudah dibaca
+const B = 1e9; // 1 billion Rupiah, so the sample numbers are easy to read
 
 export const kpis: KpiRow[] = [
   { key: 'revenue', label: 'Total Revenue (YTD)', value: 812.4 * B, prevValue: 735.1 * B, unit: 'IDR' },
@@ -51,11 +51,11 @@ export const monthly: MonthRow[] = [
 }));
 
 export const topCustomers: RankedRow[] = [
-  { name: 'RS Contoh Sejahtera', revenue: 48.2 * B },
-  { name: 'Klinik Sehat Bersama', revenue: 36.9 * B },
-  { name: 'RS Harapan Kota', revenue: 31.4 * B },
-  { name: 'Laboratorium Medika Utama', revenue: 27.8 * B },
-  { name: 'RS Ibu dan Anak Mawar', revenue: 22.5 * B },
+  { name: 'Sample General Hospital', revenue: 48.2 * B },
+  { name: 'Healthy Together Clinic', revenue: 36.9 * B },
+  { name: 'City Hope Hospital', revenue: 31.4 * B },
+  { name: 'Prime Medika Laboratory', revenue: 27.8 * B },
+  { name: 'Rose Mother & Child Hospital', revenue: 22.5 * B },
 ];
 
 export const branches: BranchRow[] = [

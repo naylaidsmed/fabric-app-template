@@ -1,8 +1,8 @@
-// ✅ GANTI src/Root.spec.tsx di project-mu dengan file ini.
-// Test login bawaan template mencari judul halaman Welcome. Setelah App.tsx
-// diganti ke Dashboard, test mencari judul dashboard (APP_TITLE) — diambil
-// langsung dari Dashboard.tsx, jadi tetap lulus walau judulnya kamu ganti.
-// Isi lainnya sama persis dengan bawaan template.
+// ✅ REPLACE src/Root.spec.tsx in your project with this file.
+// The template's default sign-in test looks for the Welcome page title. Once App.tsx
+// is switched to the Dashboard, the test looks for the dashboard title (APP_TITLE) —
+// imported straight from Dashboard.tsx, so it still passes if you change the title.
+// Everything else is identical to the template default.
 
 import type { OpaqueSession } from '@microsoft/rayfin-auth';
 import { act, fireEvent, render, screen } from '@testing-library/react';

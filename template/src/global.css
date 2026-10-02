@@ -1,11 +1,11 @@
-/* ✅ GANTI SELURUH src/global.css di project-mu dengan file ini.
-   Diambil apa adanya dari datacubeapp. Berisi semua token warna, spasi, dan font
-   yang dipakai komponen template (mis. bg-navy, text-300, shadow-card), untuk
-   mode terang dan gelap (.dark).
+/* ✅ REPLACE ALL of src/global.css in your project with this file.
+   Taken as-is from datacubeapp. Contains every color, spacing, and font token
+   the template components use (e.g. bg-navy, text-300, shadow-card), for
+   light and dark mode (.dark).
 
-   👉 GANTI DI SINI (opsional): mau ganti warna tema? Ubah nilai warnanya saja,
-   jangan ubah nama tokennya. Chart membaca --color-chart-1 s.d. -5, --color-brand,
-   --color-navy, --color-ice, --color-good/bad/warn — semuanya di bawah. */
+   👉 CHANGE HERE (optional): want different theme colors? Change only the color values,
+   not the token names. Charts read --color-chart-1 to -5, --color-brand,
+   --color-navy, --color-ice, --color-good/bad/warn — all of them below. */
 
 @import 'tailwindcss';
 

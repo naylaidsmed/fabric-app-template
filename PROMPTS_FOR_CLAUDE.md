@@ -1,107 +1,107 @@
-# Prompt siap pakai untuk Claude Code
+# Ready-to-use prompts for Claude Code
 
-Salin prompt, ganti bagian `[...]`, lalu tempel ke Claude Code yang dibuka di
-folder project-mu. Claude akan membaca `AGENTS.md` project dan mengikuti pola
-template ini.
+Copy a prompt, fill in the `[...]` parts, then paste it into Claude Code opened in
+your project folder. Claude will read the project's `AGENTS.md` and follow this
+template's patterns.
 
-> Tip: sebut nama file/chart persis seperti di project (mis. `Dashboard.tsx`,
-> `BarChart`, `loadMonthly`) supaya Claude tidak menebak.
+> Tip: name files/charts exactly as they appear in the project (e.g. `Dashboard.tsx`,
+> `BarChart`, `loadMonthly`) so Claude doesn't have to guess.
 
 ---
 
-### 1. Menambah chart
-**Kapan:** kamu ingin visual baru di dashboard dari data yang sudah ada.
+### 1. Add a chart
+**When:** you want a new visual on the dashboard from data you already have.
 
 ```
-Tambahkan chart [jenis: LineChart/BarChart/DonutChart/...] ke Dashboard.tsx di bagian [nama section],
-judul "[judul]", menampilkan [metrik] per [dimensi].
-Ambil data dari fungsi baru load[Nama]() di src/data/data.ts (pakai data contoh dulu di sample-data.ts).
-Ikuti pola <ChartCard> + <DataState> yang sudah ada, dan bentuk data yang tertulis di atas file komponen chart-nya.
+Add a [type: LineChart/BarChart/DonutChart/...] chart to Dashboard.tsx in the [section name] section,
+titled "[title]", showing [metric] by [dimension].
+Get the data from a new load[Name]() function in src/data/data.ts (use sample data in sample-data.ts first).
+Follow the existing <ChartCard> + <DataState> pattern, and the data shape documented at the top of the chart component file.
 ```
 
-### 2. Mengganti data contoh dengan data warehouse
-**Kapan:** tampilan sudah oke, sekarang mau pakai angka asli.
+### 2. Replace sample data with warehouse data
+**When:** the layout looks good, and now you want real numbers.
 
 ```
-Ganti fungsi [load...] di src/data/data.ts supaya membaca tabel [schema.Tabel] di warehouse lewat connector [nama connector],
-kolom [kolom1, kolom2, ...]. Ikuti blok CARA B dan contoh di template/examples/warehouse.
-Cek nama & tipe kolom di rayfin/connectors/[nama connector]/metadata.json — jangan menebak.
+Change the [load...] function in src/data/data.ts so it reads the [schema.Table] table in the warehouse through the [connector name] connector,
+columns [column1, column2, ...]. Follow the OPTION B block and the example in template/examples/warehouse.
+Check the column names & types in rayfin/connectors/[connector name]/metadata.json — don't guess.
 ```
 
-### 3. Menyambungkan SQL milikku sendiri
-**Kapan:** kamu sudah punya query SQL dan ingin hasilnya tampil di chart.
+### 3. Wire up my own SQL
+**When:** you already have a SQL query and want its result shown in a chart.
 
 ```
-Aku punya query ini untuk chart [nama chart]:
+I have this query for the [chart name] chart:
 [paste SQL]
-Jadikan tabel ringkasan di warehouse (schema app, pola DELETE + INSERT di dalam procedure seperti
-template/examples/warehouse/01_summary_table.sql), buat entity connector-nya, daftarkan di schema.ts,
-dan sambungkan ke fungsi load...() di data.ts. Jangan pakai view — connector hanya bisa membaca tabel.
+Turn it into a summary table in the warehouse (app schema, DELETE + INSERT pattern inside a procedure like
+template/examples/warehouse/01_summary_table.sql), create its connector entity, register it in schema.ts,
+and wire it up to a load...() function in data.ts. Don't use a view — the connector can only read tables.
 ```
 
-### 4. Membantu menulis query
-**Kapan:** kamu tahu angka yang dimau, tapi belum tahu query-nya.
+### 4. Help writing a query
+**When:** you know the numbers you want, but not the query yet.
 
 ```
-Bantu aku menulis query SQL untuk [metrik, mis. revenue per bulan] per [dimensi, mis. branch]
-dari tabel [schema.Tabel] di warehouse. Filter: [mis. Company_Code = '6128', tahun berjalan].
-Hindari kolom GUID (uniqueidentifier). Tunjukkan query SELECT-nya dulu untuk aku uji sebelum dijadikan tabel ringkasan.
+Help me write a SQL query for [metric, e.g. revenue per month] by [dimension, e.g. branch]
+from the [schema.Table] table in the warehouse. Filter: [e.g. Company_Code = '6128', current year].
+Avoid GUID (uniqueidentifier) columns. Show me the SELECT query first so I can test it before turning it into a summary table.
 ```
 
-### 5. Menambah tabel/entity baru
-**Kapan:** butuh sumber data baru yang belum terdaftar di connector.
+### 5. Add a new table/entity
+**When:** you need a new data source that isn't registered in the connector yet.
 
 ```
-Buat entity connector baru [NamaEntity] untuk tabel [schema.Tabel] di rayfin/connectors/[nama connector]/,
-kolom: [kolom: tipe, ...]. Daftarkan di schema.ts (import, entities, dan tipe).
-Pastikan tabelnya benar-benar ada di warehouse — satu entity yang hilang membuat seluruh connector gagal.
+Create a new connector entity [EntityName] for the [schema.Table] table in rayfin/connectors/[connector name]/,
+columns: [column: type, ...]. Register it in schema.ts (import, entities, and the type).
+Make sure the table really exists in the warehouse — a single missing entity makes the whole connector fail.
 ```
 
-### 6. Memperbaiki error
-**Kapan:** muncul error saat `npm run typecheck`, `npm test`, `npm run build`, atau di app.
+### 6. Fix an error
+**When:** an error appears during `npm run typecheck`, `npm test`, `npm run build`, or in the app.
 
 ```
-Perbaiki error ini. Jelaskan penyebabnya dulu dalam bahasa sederhana, baru ubah kodenya:
-[paste error lengkap]
+Fix this error. Explain the cause in plain language first, then change the code:
+[paste full error]
 ```
 
-### 7. Mengubah tampilan
-**Kapan:** ganti judul, warna, urutan bagian, atau menu.
+### 7. Change the look
+**When:** changing the title, colors, section order, or menu.
 
 ```
-Ubah [judul app / warna tema / urutan section / menu] di Dashboard.tsx menjadi [...].
-Untuk warna, ubah token di global.css saja — jangan hardcode warna di komponen.
+Change the [app title / theme colors / section order / menu] in Dashboard.tsx to [...].
+For colors, only change the tokens in global.css — don't hardcode colors in components.
 ```
 
-### 8. Cek sebelum publish
-**Kapan:** sebelum `npx rayfin up`.
+### 8. Check before publishing
+**When:** before `npx rayfin up`.
 
 ```
-Jalankan npm run typecheck, npm test, dan npm run build berurutan. Kalau ada yang gagal, perbaiki
-penyebabnya lalu jalankan ulang. Ringkas hasilnya untukku.
+Run npm run typecheck, npm test, and npm run build in order. If any of them fails, fix
+the cause and run it again. Summarize the results for me.
 ```
 
-### 9. Commit & push ke GitHub
-**Kapan:** perubahan sudah dicek dan ingin disimpan.
+### 9. Commit & push to GitHub
+**When:** your changes have been checked and you want to save them.
 
 ```
-Commit perubahanku dengan pesan "[pesan]" lalu push ke GitHub (branch [main]).
-Pastikan rayfin/.env, file .env, dan node_modules tidak ikut ter-commit.
+Commit my changes with the message "[message]" then push to GitHub (branch [main]).
+Make sure rayfin/.env, .env files, and node_modules are not committed.
 ```
 
 ### 10. Rollback
-**Kapan:** perubahan terakhir bermasalah dan ingin kembali.
+**When:** the latest change is broken and you want to go back.
 
 ```
-Tunjukkan riwayat commit terakhir. Aku mau kembali ke versi sebelum [perubahan]. Pakai git revert
-(jangan hapus riwayat), jalankan cek typecheck/test/build, lalu tanya aku dulu sebelum npx rayfin up.
+Show me the recent commit history. I want to go back to the version before [change]. Use git revert
+(don't delete history), run the typecheck/test/build checks, then ask me before running npx rayfin up.
 ```
 
-### 11. Pindah workspace
-**Kapan:** deploy app yang sama ke workspace Fabric lain.
+### 11. Switch workspace
+**When:** deploying the same app to a different Fabric workspace.
 
 ```
-Aku mau deploy app ini ke workspace "[nama workspace]". Cek apakah warehouse di workspace itu punya
-tabel yang sama, arahkan ulang connector ke warehouse di sana (ID-nya bisa beda walau namanya sama),
-lalu tunjukkan rencana deploy (--dry-run) sebelum benar-benar deploy.
+I want to deploy this app to the "[workspace name]" workspace. Check whether the warehouse in that workspace has
+the same tables, re-point the connector to the warehouse there (its ID may differ even if the name is the same),
+then show me the deploy plan (--dry-run) before actually deploying.
 ```

@@ -1,14 +1,14 @@
-// 🟦 TreemapChart — kotak berukuran sesuai nilai; warna menunjukkan angka kedua.
-// Diambil dari datacubeapp: "Gross Profit by Care Area"
-// (ukuran = gross profit, warna = margin %).
+// 🟦 TreemapChart — tiles sized by value; color shows a second number.
+// Taken from datacubeapp: "Gross Profit by Care Area"
+// (size = gross profit, color = margin %).
 //
-// Bentuk data (satu baris = satu kotak):
+// Data shape (one row = one tile):
 //   [{ area: 'Cardiology', grossProfit: 40000000000, marginPct: 40 }, ...]
-//   - kolom label  : teks
-//   - kolom ukuran : angka (hanya nilai > 0 yang digambar)
-//   - kolom warna  : angka persen, opsional (makin tinggi makin gelap/navy)
+//   - label field : text
+//   - size field  : number (only values > 0 are drawn)
+//   - color field : percentage number, optional (higher = darker/navy)
 //
-// Contoh:
+// Example:
 //   <TreemapChart data={areas} labelKey="area" valueKey="grossProfit" unit="IDR"
 //     colorKey="marginPct" colorName="Margin"
 //     label="Gross profit by care area; darker means higher margin" />
@@ -26,9 +26,9 @@ export interface TreemapChartProps<T> {
   labelKey: keyof T & string;
   valueKey: keyof T & string;
   unit?: ValueUnit;
-  /** Kolom persen untuk warna (opsional). Tanpa ini, warna mengikuti ukuran. */
+  /** Percentage field for the color (optional). Without it, color follows size. */
   colorKey?: keyof T & string;
-  /** Nama angka warna saat hover, mis. "Margin". */
+  /** Name of the color number on hover, e.g. "Margin". */
   colorName?: string;
   height?: number;
   label: string;

@@ -1,7 +1,7 @@
-// ✅ TIDAK PERLU DIUBAH. Diambil apa adanya dari datacubeapp (components/plotly-chart.tsx).
-// Pembungkus Plotly: memuat Plotly hanya saat chart pertama tampil (file-nya ~4,6 MB),
-// mengikuti lebar kartu, dan memakai tema dari chart-theme.ts. Semua chart di
-// components/charts/ menggambar lewat komponen ini.
+// ✅ NO CHANGES NEEDED. Taken as-is from datacubeapp (components/plotly-chart.tsx).
+// Plotly wrapper: loads Plotly only when the first chart appears (the file is ~4.6 MB),
+// follows the card's width, and uses the theme from chart-theme.ts. Every chart in
+// components/charts/ draws through this component.
 
 import { useEffect, useRef, useState } from 'react';
 import type { Config, Data, Layout } from 'plotly.js';

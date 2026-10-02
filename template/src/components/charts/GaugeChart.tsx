@@ -1,13 +1,13 @@
-// 🎯 GaugeChart — satu persentase terhadap target 100%.
-// Diambil dari datacubeapp: "Target Achievement".
+// 🎯 GaugeChart — a single percentage against a 100% target.
+// Taken from datacubeapp: "Target Achievement".
 //
-// Bentuk data: SATU angka persen (sudah dikali 100), mis. 87.4 untuk 87,4%.
+// Data shape: ONE percentage number (already multiplied by 100), e.g. 87.4 for 87.4%.
 //
-// Contoh:
+// Example:
 //   <GaugeChart value={87.4} label="Year-to-date target achievement 87.4%" />
 //
-// Pita latar: 0–70 pucat, 70–90 sedang, 90–120 penuh; garis navy = 100%.
-// Angka kecil di bawah = selisih terhadap 100 (hijau di atas, merah di bawah).
+// Background bands: 0–70 pale, 70–90 medium, 90–120 full; navy line = 100%.
+// Small number below = difference from 100 (green above, red below).
 
 import { useMemo } from 'react';
 
@@ -15,7 +15,7 @@ import { PlotlyChart, type Figure } from '@/components/plotly-chart';
 import { useChartTheme, withAlpha } from '@/lib/chart-theme';
 
 export interface GaugeChartProps {
-  /** Persen pencapaian, mis. 87.4. */
+  /** Achievement percentage, e.g. 87.4. */
   value: number;
   height?: number;
   label: string;

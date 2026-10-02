@@ -1,10 +1,10 @@
-// 📋 SimpleTable — tabel ringkas yang bisa di-scroll, untuk daftar yang perlu dibaca baris per baris.
-// Diambil dari datacubeapp: tabel "Needs Attention" di bagian IT / Data.
+// 📋 SimpleTable — a compact scrollable table, for lists that need to be read row by row.
+// Taken from datacubeapp: the "Needs Attention" table in the IT / Data section.
 //
-// Bentuk data: baris apa saja; kolom yang tampil ditentukan lewat `columns`.
+// Data shape: any rows; the columns shown are defined through `columns`.
 //   [{ table: 'dbo.T2', rows: 0, status: 'Empty' }, ...]
 //
-// Contoh:
+// Example:
 //   <SimpleTable data={rows} emptyText="All tables are loaded."
 //     columns={[
 //       { key: 'table', header: 'Table' },
@@ -20,14 +20,14 @@ export interface TableColumn<T> {
   key: keyof T & string;
   header: string;
   align?: 'left' | 'right';
-  /** Ubah tampilan nilai, mis. format angka atau badge warna. */
+  /** Customize how the value is displayed, e.g. number formatting or a colored badge. */
   format?: (value: T[keyof T], row: T) => ReactNode;
 }
 
 export interface SimpleTableProps<T> {
   data: T[];
   columns: TableColumn<T>[];
-  /** Pesan saat data kosong. */
+  /** Message shown when there is no data. */
   emptyText?: string;
 }
 
